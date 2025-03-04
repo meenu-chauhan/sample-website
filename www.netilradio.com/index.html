@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charSet="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="theme-color" content="#007eff" />
+    <meta data-react-helmet="true" property="og:image" content="http://www.netilradio.com/images/fbshare.png" />
+    <meta data-react-helmet="true" property="og:type" content="website" />
+    <meta data-react-helmet="true" property="og:description" content="Real life radio from residents, shows and DJ’s with stories and anecdotes of lives spent in music." />
+    <meta data-react-helmet="true" name="description" content="Real life radio from residents, shows and DJ’s with stories and anecdotes of lives spent in music." />
+    <meta data-react-helmet="true" property="og:title" content="Netil Radio" />
+    <meta data-react-helmet="true" property="og:url" content="http://www.netilradio.com" />
+    <meta name="generator" content="Gatsby 4.7.2" />
+    <style data-href="/styles.bab6c316669d20b7fa31.css" data-identity="gatsby-global-css">
+        .radio-player,
+        .radio-player button {
+            height: 60px;
+            position: relative
+        }
+
+        .radio-player button {
+            background-color: transparent;
+            border: 1px solid #fff;
+            border-radius: 100%;
+            color: #fff;
+            cursor: pointer;
+            display: block;
+            font-size: 1rem;
+            margin: 0 auto;
+            transition: color .25s, background-color .25s;
+            width: 60px
+        }
+
+        .radio-player button:hover {
+            background-color: #fff;
+            color: #007eff
+        }
+
+        .radio-player button:focus {
+            outline: 0
+        }
+
+        .radio-player .circle {
+            fill: transparent;
+            stroke: #fff;
+            stroke-width: 3px;
+            stroke-dasharray: 283;
+            stroke-dashoffset: 0;
+            stroke-linecap: round;
+            height: 60px;
+            position: absolute;
+            -webkit-transform: scale(1.1) rotate(-90deg);
+            transform: scale(1.1) rotate(-90deg);
+            transition: stroke-dashoffset .5s;
+            width: 60px
+        }
+
+        .radio-player .play-icon {
+            fill: currentColor;
+            transition: fill .25s;
+            width: .5em
+        }
+
+        @media(min-width:992px) {
+            .radio-player {
+                height: 95px
+            }
+            .radio-player button {
+                font-size: 1.5rem
+            }
+            .radio-player .circle,
+            .radio-player button {
+                height: 95px;
+                width: 95px
+            }
+        }
+
+        .schedule-container {
+            margin-left: 16px;
+            transition: opacity .25s;
+            width: 100%
+        }
+
+        @media(min-width:992px) {
+            .schedule-container {
+                margin-left: 38px
+            }
+        }
+
+        .schedule-container.is-hidden {
+            opacity: 0
+        }
+
+        .schedule-current,
+        .schedule-upcoming {
+            display: flex
+        }
+
+        @media(min-width:992px) {
+            .schedule-current,
+            .schedule-upcoming {
+                align-items: center
+            }
+        }
+
+        .schedule-current {
+            align-items: center;
+            height: 66px
+        }
+
+        @media(min-width:992px) {
+            .schedule-current {
+                height: 95px
+            }
+        }
+
+        .schedule-upcoming {
+            border-top: 1px solid #fff;
+            left: 0;
+            margin-top: 1em;
+            padding-top: 1em;
+            position: absolute;
+            top: 100%;
+            width: 100%
+        }
+
+        @media(min-width:992px) {
+            .schedule-upcoming {
+                border: 0;
+                font-size: .8em;
+                margin-top: -.5em;
+                padding-top: 0;
+                position: static;
+                top: 0
+            }
+        }
+
+        .schedule-upcoming .time-container {
+            position: relative;
+            width: 79px
+        }
+
+        @media(min-width:992px) {
+            .schedule-upcoming .time-container {
+                cursor: default;
+                padding-right: 0;
+                width: 124px
+            }
+            .schedule-upcoming .time-container.is-detailed .upcoming-time,
+            .schedule-upcoming .time-container:hover .upcoming-time {
+                opacity: 0
+            }
+            .schedule-upcoming .time-container.is-detailed .time-explained,
+            .schedule-upcoming .time-container:hover .time-explained {
+                opacity: 1
+            }
+        }
+
+        .schedule-upcoming .time-explained,
+        .schedule-upcoming .upcoming-time {
+            transition: opacity .25s
+        }
+
+        .schedule-upcoming .time-explained {
+            opacity: 0;
+            position: absolute;
+            top: 0
+        }
+
+        .schedule-title {
+            position: relative
+        }
+
+        .schedule-title.is-live:before {
+            bottom: 110%;
+            content: "Now live";
+            font-size: .8rem;
+            position: absolute
+        }
+
+        .schedule-title.is-long {
+            font-size: 1.7rem
+        }
+
+        .main-logo {
+            border: 1px solid hsla(0, 0%, 100%, .4);
+            border-radius: 100%;
+            display: flex;
+            height: 96px;
+            padding: .25em;
+            position: relative;
+            -webkit-transform: translateY(-25%);
+            transform: translateY(-25%);
+            width: 96px
+        }
+
+        .main-logo>img {
+            width: 52px
+        }
+
+        @media(min-width:992px) {
+            .main-logo {
+                height: 178px;
+                padding: .5em;
+                width: 178px
+            }
+            .main-logo>img {
+                width: 96px
+            }
+        }
+
+        .main-menu {
+            display: none
+        }
+
+        @media(min-width:992px) {
+            .main-menu {
+                display: block;
+                list-style-type: none;
+                margin: 0;
+                position: absolute;
+                right: 25px;
+                top: 18px
+            }
+        }
+
+        .main-menu>li {
+            -webkit-font-smoothing: antialiased;
+            background: url(/images/arrow.svg) no-repeat 0;
+            border-top: 1px solid hsla(0, 0%, 100%, .4);
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 36px;
+            padding-left: 2.5em;
+            padding-top: 2px;
+            transition: background-position-x .3s;
+            width: 230px
+        }
+
+        .main-menu>li:hover {
+            background-position-x: .5em
+        }
+
+        @font-face {
+            font-family: Fakt;
+            font-weight: 400;
+            src: url(/fonts/FaktPro-Normal.woff) format("woff")
+        }
+
+        @font-face {
+            font-family: Fakt;
+            font-weight: 700;
+            src: url(/fonts/FaktPro-Medium.woff) format("woff")
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            font-size: 16px
+        }
+
+        @media(min-width:580px) {
+            html {
+                font-size: 20px
+            }
+        }
+
+        body {
+            background-color: #007eff;
+            color: #fff;
+            font-family: Fakt, sans-serif;
+            margin: 0
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        .narrow-width {
+            margin: 0 auto;
+            max-width: 540px;
+            padding: 0 25px
+        }
+
+        @media(min-width:992px) {
+            .narrow-width {
+                max-width: 1050px
+            }
+        }
+
+        .alpha,
+        h1,
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.4
+        }
+
+        @media(min-width:992px) {
+            .alpha,
+            h1,
+            h2 {
+                font-size: 2rem
+            }
+        }
+
+        .beta,
+        h3,
+        h4 {
+            font-size: 1.2rem
+        }
+
+        .radio-area,
+        header {
+            position: relative
+        }
+
+        .radio-area {
+            align-items: flex-start;
+            display: flex
+        }
+
+        .dots-container {
+            display: flex;
+            justify-content: center
+        }
+
+        @media(min-width:580px) {
+            .dots-container {
+                justify-content: space-between
+            }
+        }
+
+        .dots {
+            background-image: radial-gradient(transparent 30%, #fff calc(30% + .5px), #fff calc(30% + 1px), transparent calc(30% + 2px));
+            background-position: -5px -5px;
+            background-size: 22px 22px;
+            content: "";
+            display: none;
+            height: 232px;
+            margin-top: 100px;
+            width: 298px
+        }
+
+        @media(-webkit-min-device-pixel-ratio:2),
+        (min-resolution:192dpi) {
+            .dots {
+                background-image: radial-gradient(transparent 30%, #fff calc(30% + .5px), #fff calc(30% + 1px), transparent calc(30% + 1.5px))
+            }
+        }
+
+        .dots:first-child {
+            display: block
+        }
+
+        @media(min-width:580px) {
+            .dots {
+                width: 232px
+            }
+            .dots:nth-child(2) {
+                display: block
+            }
+        }
+
+        @media(min-width:992px) {
+            .dots {
+                display: block;
+                margin-top: 55px
+            }
+        }
+
+        body.is-playing-radio .dots {
+            background-image: radial-gradient(#fff calc(30% + 1px), transparent calc(30% + 2px))
+        }
+
+        @media(-webkit-min-device-pixel-ratio:2),
+        (min-resolution:192dpi) {
+            body.is-playing-radio .dots {
+                background-image: radial-gradient(#fff calc(30% + 1px), transparent calc(30% + 1.5px))
+            }
+        }
+
+        .top-area {
+            align-items: center;
+            display: flex;
+            margin-top: 50px;
+            min-height: 500px
+        }
+
+        @media(min-width:992px) {
+            .top-area {
+                height: calc(100vh - 178px);
+                margin-top: 0
+            }
+        }
+
+        .content-group {
+            padding-bottom: 4em;
+            width: 100%
+        }
+
+        .residents-section {
+            border-top: 1px solid #fff
+        }
+
+        .residents-section-inner {
+            padding-bottom: 4em;
+            padding-top: 4em
+        }
+
+        @media(min-width:992px) {
+            .residents-section-inner {
+                display: flex
+            }
+        }
+
+        .residents-section-inner h3 {
+            margin: 0 0 2em;
+            width: 232px
+        }
+
+        @media(min-width:992px) {
+            .residents-section-inner h3 {
+                margin: 0
+            }
+        }
+
+        .residents-list {
+            -webkit-font-smoothing: antialiased;
+            font-size: .8em;
+            line-height: 1.4;
+            list-style-type: none;
+            padding: 0
+        }
+
+        @media(min-width:580px) {
+            .residents-list {
+                -webkit-column-count: 2;
+                column-count: 2;
+                -webkit-column-gap: 25px;
+                column-gap: 25px
+            }
+        }
+
+        @media(min-width:992px) {
+            .residents-list {
+                -webkit-column-count: 3;
+                column-count: 3;
+                margin: 0 0 0 25px;
+                width: calc(100% - 237px)
+            }
+        }
+
+        .residents-list a:hover {
+            text-decoration: underline
+        }
+
+        .footer {
+            border-top: 1px solid #fff;
+            padding: 100px 0
+        }
+
+        .footer a {
+            text-decoration: underline
+        }
+
+        .footer-inner {
+            font-size: .8em
+        }
+
+        @media(min-width:992px) {
+            .footer-inner {
+                display: flex;
+                flex-direction: row-reverse
+            }
+        }
+
+        .footer-inner .footer-logos,
+        .footer-inner .text {
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.4
+        }
+
+        @media(min-width:992px) {
+            .footer-inner .footer-logos,
+            .footer-inner .text {
+                padding-left: 10px;
+                width: 50%
+            }
+        }
+
+        .footer-inner .footer-logos {
+            padding-top: 2rem
+        }
+
+        @media(min-width:992px) {
+            .footer-inner .footer-logos {
+                padding-top: 0
+            }
+        }
+
+        .footer-inner .social-media {
+            display: flex;
+            list-style-type: none;
+            margin-top: 74px;
+            padding: 0
+        }
+
+        .footer-inner .social-media>li {
+            align-items: center;
+            display: flex
+        }
+
+        .footer-inner .social-media>li~li {
+            margin-left: 1.75em
+        }
+
+        .footer-logos {
+            display: flex;
+            list-style-type: none;
+            margin: 0;
+            padding: 0
+        }
+
+        .footer-logos li~li {
+            padding-left: 2rem
+        }
+
+        .footer-logos img {
+            height: 4rem
+        }
+    </style>
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl + '';
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-TDK5TPV');
+    </script>
+    <title data-react-helmet="true">Netil Radio</title>
+    <link rel="icon" href="/favicon-32x32.png?v=f5b304c8d9d923c4d75cee6c491428d2" type="image/png" />
+    <link rel="manifest" href="/manifest.webmanifest" crossorigin="anonymous" />
+    <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png?v=f5b304c8d9d923c4d75cee6c491428d2" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png?v=f5b304c8d9d923c4d75cee6c491428d2" />
+    <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png?v=f5b304c8d9d923c4d75cee6c491428d2" />
+    <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png?v=f5b304c8d9d923c4d75cee6c491428d2" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png?v=f5b304c8d9d923c4d75cee6c491428d2" />
+    <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png?v=f5b304c8d9d923c4d75cee6c491428d2" />
+    <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png?v=f5b304c8d9d923c4d75cee6c491428d2" />
+    <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png?v=f5b304c8d9d923c4d75cee6c491428d2" />
+    <link as="script" rel="preload" href="/webpack-runtime-c816e5f1a78c4a4343a5.js" />
+    <link as="script" rel="preload" href="/framework-2a97f677c582c25acc7e.js" />
+    <link as="script" rel="preload" href="/app-5b85b32007a0ac2e51e4.js" />
+    <link as="script" rel="preload" href="/component---src-pages-index-jsx-c2385e36cdedbb0cc4b3.js" />
+    <link as="fetch" rel="preload" href="/page-data/index/page-data.json" crossorigin="anonymous" />
+    <link as="fetch" rel="preload" href="/page-data/app-data.json" crossorigin="anonymous" />
+</head>
+
+<body><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TDK5TPV" height="0" width="0" style="display: none; visibility: hidden" aria-hidden="true"></iframe></noscript>
+    <div id="___gatsby">
+        <div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper">
+            <header class="narrow-width">
+                <div class="main-logo"><img src="/images/logo.svg" width="130" alt="" /></div>
+                <ul class="main-menu">
+                    <li aria-label="Open chatroom"><a href="http://netil-radio.chatango.com/">Chatroom</a></li>
+                    <li><a href="#residents">Residents</a></li>
+                    <li><a href="https://netilradio.substack.com/welcome" target="_blank" rel="noopener noreferrer">Newsletter</a></li>
+                </ul>
+            </header>
+            <main>
+                <section class="top-area narrow-width">
+                    <div class="content-group">
+                        <div class="radio-area">
+                            <div class="radio-player"><svg class="circle" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="stroke-dashoffset:283"><circle cx="50" cy="50" r="45"></circle></svg><button aria-label="Play or pause radio player" type="button" title="Play"><svg viewBox="0 0 34 42" xmlns="http://www.w3.org/2000/svg" class="play-icon"><path d="m0 0v42l34-21z" fill-rule="evenodd"></path></svg></button>
+                                <audio
+                                    src="https://netilradio.out.airtime.pro/netilradio_a"></audio>
+                            </div>
+                            <div class="schedule-container is-hidden">
+                                <div class="schedule-current">
+                                    <div aria-live="polite" class="schedule-title alpha" role="status">Archive playing</div>
+                                </div>
+                                <div class="schedule-upcoming">
+                                    <div class="time-container "><time dateTime="0" class="upcoming-time">01:00</time>
+                                        <div class="time-explained"><span>Starts soon</span></div>
+                                    </div>
+                                    <div class="schedule-next-title"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dots-container">
+                            <div class="dots" role="presentation"></div>
+                            <div class="dots" role="presentation"></div>
+                            <div class="dots" role="presentation"></div>
+                            <div class="dots" role="presentation"></div>
+                        </div>
+                    </div>
+                </section>
+                <section class="residents-section" id="residents">
+                    <div class="narrow-width residents-section-inner">
+                        <h3>Residents</h3>
+                        <ul class="residents-list">
+                            <li><a href="https://soundcloud.com/netil-radio/sets/3wd-festival-show-2nd-friday-3" target="_blank" rel="noreferrer">3WD Festival Show</a></li>
+                            <li><a href="#" target="_blank" rel="noreferrer">A Real Sisterhood</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/a-path-through-haze-w-psych" target="_blank" rel="noreferrer">A Path Through Haze w/ Psych Milligan</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/act-now-w-chris-airplays-3rd" target="_blank" rel="noreferrer">Act Now w/ Chris Airplays</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/airali-4th-tuesday-7-9pm" target="_blank" rel="noreferrer">Airali</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/all-zipped-up-1st-saturday-3" target="_blank" rel="noreferrer">All Zipped Up</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/angles-w-tech-nicholson-3rd" target="_blank" rel="noreferrer">Angles: w/ Tech Nicholson</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/artists-without-borders-w" target="_blank" rel="noreferrer">Artists Without Borders w/ Makaan-مکان</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/azim-fathi-1st-wednesday-3-5pm" target="_blank" rel="noreferrer">Azim Fathi</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/babyface-music-w-babyboy-g-2nd" target="_blank" rel="noreferrer">BabyFace Music w/ BabyBoy G</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/beta-k-1st-friday-5-7pm" target="_blank" rel="noreferrer">Beta K</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/benjaluwi-4th-friday-1-3pm" target="_blank" rel="noreferrer">benjaluwi</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/berries-crop-1st-monday-5-7pm" target="_blank" rel="noreferrer">Berries Crop w/ cut.malina &amp; Street Sound</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/bisbass-w-xalimo-kabz-2nd" target="_blank" rel="noreferrer">BisBass w/ Kabz &amp; Xalimo</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/blaow-w-myles-morgan-3rd" target="_blank" rel="noreferrer">Blaow w/ Myles Morgan</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/bremonds-chat-show-4th" target="_blank" rel="noreferrer">Brémond&#x27;s Chat Show</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/body-swap-1st-tuesday-3-5pm" target="_blank" rel="noreferrer">Body Swap w/ Karlie Marx &amp; Harietta</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/bokhari-records-2nd-friday-9" target="_blank" rel="noreferrer">Bokhari Records</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/boya-w-d-joyce-emmy-quarterly" target="_blank" rel="noreferrer">BOYA w/ D-Joyce &amp; Emmy</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/buggery-trips-2nd-wednesday-3" target="_blank" rel="noreferrer">Buggery Trips w/ Buggery Grips</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/canan-batur-2nd-sunday-12-2pm" target="_blank" rel="noreferrer">Canan Batur</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/cascade-w-ex-sses-3rd-tuesday" target="_blank" rel="noreferrer">cascade w/ ex.sses</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/carmina-w-rob-amy-alford-2nd" target="_blank" rel="noreferrer">Carmina w/ Amy Alford &amp; Ant</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/ceylan-goeksel-3rd-wednesday-3" target="_blank" rel="noreferrer">Ceylan Göksel</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/clap-city-records-1st-thursday" target="_blank" rel="noreferrer">Clap City Records</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/come-down-with-me-w-ugly" target="_blank" rel="noreferrer">Come Down With Me w/ Ugly Drugless</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/crispian-2nd-tuesday-9-11pm" target="_blank" rel="noreferrer">Crispian</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/club-brother-1st-wednesday-9" target="_blank" rel="noreferrer">Club Brother</a></li>
+                            <li><a href="#" target="_blank" rel="noreferrer">Dan Nicholls</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/dads-records-3rd-saturday-11am" target="_blank" rel="noreferrer">Dad&#x27;s Records</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/dana-2nd-friday-7-9pm" target="_blank" rel="noreferrer">Dana</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/dogsitting-w-mander-1st-friday" target="_blank" rel="noreferrer">Dogsitting w/ Mander</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/diasporic-daze-w-ronisa-1st" target="_blank" rel="noreferrer">Diasporic Daze w/ RONISA</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/dig-yourself-1st-saturday-11am" target="_blank" rel="noreferrer">Dig Yourself</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/discofunk-4th-saturday-5-7pm" target="_blank" rel="noreferrer">Discofunk</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/discoisdead-2nd-tuesday-7-9pm" target="_blank" rel="noreferrer">discøisdead w/ Edwin</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/disintegration-w-oren-g-1st" target="_blank" rel="noreferrer">Disintegration w/ Oren G</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/dpinaech-2nd-sunday-8-10pm" target="_blank" rel="noreferrer">dpinaech</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/drastic-shuffle-4th-thursday-5" target="_blank" rel="noreferrer">Drastic Shuffle</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/e2-e8-w-luca-2nd-sunday-4-6pm" target="_blank" rel="noreferrer">E2-E8 w/ Luca</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/ecstasy-garage-disco-w-joe" target="_blank" rel="noreferrer">Ecstasy Garage Disco w/ Joe Nonlocal</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/electric-dream-w-chieka-29th" target="_blank" rel="noreferrer">Electric Dreams w/ Chieka</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/expansion-w-amodeus-2nd" target="_blank" rel="noreferrer">Expansion w/ AMODEUS</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/ez-listening-w-the-sausage" target="_blank" rel="noreferrer">EZ-Listening w/ Sausage King of Chicago</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/fear-of-music-3rd-tuesday-10pm" target="_blank" rel="noreferrer">Fear of Music</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/feed-the-void-w-birds-4th" target="_blank" rel="noreferrer">Feed The Void w/ Birds</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/fibs-w-jaye-ward-every-monday" target="_blank" rel="noreferrer">FIBS w/ Jaye Ward</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/field-trips-3rd-sunday-8-10pm" target="_blank" rel="noreferrer">Field Trips</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/fragile-enclosures-w-mihnea" target="_blank" rel="noreferrer">fragile enclosures w/ Mihnea</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/freedom-of-groovement-3rd" target="_blank" rel="noreferrer">Freedom of Groovement</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/fresh-from-the-past-w-scari" target="_blank" rel="noreferrer">Fresh from the Past w/ Scari</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/guests-in-the-studio" target="_blank" rel="noreferrer">Friends &amp; Family In The Studio</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/gabby-gunn-1st-tuesday-9-10pm" target="_blank" rel="noreferrer">Gabby Gunn</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/gone-troppo-2nd-monday-5-7pm" target="_blank" rel="noreferrer">Gone Troppo</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/good-smells-w-henderson-3rd" target="_blank" rel="noreferrer">Good Smells w/ Henderson</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/great-curve-1st-wednesday-11am" target="_blank" rel="noreferrer">Great Curve</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/guests-in-the-studio" target="_blank" rel="noreferrer">Guests in the studio</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/hackney-dub-club-w-peppino-i" target="_blank" rel="noreferrer">Hackney Dub Club w/ Peppino-I</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/hazy-b-3rd-tuesday-3-5pm" target="_blank" rel="noreferrer">Hazy B</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/headless-w-ales-29th-of-each" target="_blank" rel="noreferrer">Headless w/ Ales</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/hello-motto-w-mila-1st-sunday" target="_blank" rel="noreferrer">HelloMotto w/ Mila</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/hootenannies-w-babi-3rd-monday" target="_blank" rel="noreferrer">Hootenannies w/ Babi</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/chedda-bred-show-3rd-thursday" target="_blank" rel="noreferrer">Chedda Bred Show</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/in-season-w-hannah-grace-1st" target="_blank" rel="noreferrer">IN SEASON w/ Hannah Grace</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/introspective-electronics-w" target="_blank" rel="noreferrer">Introspective Electronics w/ Avsluta</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/infinite-monkeys-1st-friday-9" target="_blank" rel="noreferrer">Infinite Monkeys</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/irene-goodnight-1st-saturday-1" target="_blank" rel="noreferrer">Irene Goodnight</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/it-takes-time-w-tony-poland" target="_blank" rel="noreferrer">It Takes Time w/ Tony Poland</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/its-not-too-late-w-blake" target="_blank" rel="noreferrer">It&#x27;s Not Too Late w/ Blake Creighton</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/izzi-4th-monday-7-9pm" target="_blank" rel="noreferrer">izzi</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/jas-w-dragos-1st-sunday-12-2pm" target="_blank" rel="noreferrer">JAS w/ Dragos</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/jelly-records-3rd-wednesday-1-3pm" target="_blank" rel="noreferrer">Jelly Records</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/jess-hands-on-netil-radio-1st" target="_blank" rel="noreferrer">Jess Hands</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/jamon-jamon-w-momo-1st-monday" target="_blank" rel="noreferrer">jamón jamón w/ Momo</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/joe-pipal-4th-monday-11am-1pm" target="_blank" rel="noreferrer">Joe Pipal</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/juntos-w-guille-bonesso-4th" target="_blank" rel="noreferrer">Juntos w/ Guille Bonesso</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/josh-corbett-1st-friday-1-3pm" target="_blank" rel="noreferrer">Joshua Corbett</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/joyride-fm-1st-saturday-7-9pm" target="_blank" rel="noreferrer">Joyride FM</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/kaleidosound-w-amris-1st" target="_blank" rel="noreferrer">Kaleidosound w/ Amris, Aliyah, Jay Karim</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/kasmik-flow-w-patricia-doors" target="_blank" rel="noreferrer">Kasmik Flow w/ Patricia Doors</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/kinetic-w-dj-wiggles-2nd" target="_blank" rel="noreferrer">kinetic w / Dj wiggles</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/koshari-1st-tuesday-5-7pm" target="_blank" rel="noreferrer">Koshari w/ Yas, Kabz &amp; friends</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/lafv-radio-1st-monday-3-5pm" target="_blank" rel="noreferrer">LAFV Radio</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/liminal-radio-2nd-tuesday-11am" target="_blank" rel="noreferrer">Liminal Radio w/ Penya</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/loafy-tunes-2nd-friday-5-7pm" target="_blank" rel="noreferrer">Loafy Tunes w/ soft touch</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/long-gone-w-daire-carolan-1st" target="_blank" rel="noreferrer">Long Gone w/ Dáire Carolan</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/low-key-local-w-valentine" target="_blank" rel="noreferrer">low key &amp; local w/ valentine comar</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/make-things-music-3rd-monday-3" target="_blank" rel="noreferrer">Make Things Music</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/mandle-quarterly-on-4th" target="_blank" rel="noreferrer">Mandle</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/maybe-w-maybe-laura-3rd-monday" target="_blank" rel="noreferrer">Maybe? w/ Maybe Laura</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/max-q-4th-thursday-7-9pm" target="_blank" rel="noreferrer">Max Q</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/monachopsis-w-afromuza-3rd" target="_blank" rel="noreferrer">Monachopsis w/ Afromuza</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/mds-4th-sunday-6-8pm-1" target="_blank" rel="noreferrer">MDS</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/millie-4th-tuesday-11am-1pm" target="_blank" rel="noreferrer">Millie</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/moody-tune-mondays-w-madelic" target="_blank" rel="noreferrer">Moody Tune Mondays w/ Madelic</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/more-ritual-w-mermaids-1st" target="_blank" rel="noreferrer">More Ritual w/ Mermaids</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/morning-transition-w-miro" target="_blank" rel="noreferrer">Morning Transition w/ Miro sundayMusiq</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/move-w-christina-d-4th" target="_blank" rel="noreferrer">Move w/ Christina D</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/mr-shiver-show-4th-thursday-1" target="_blank" rel="noreferrer">Mr Shiver Show</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/music-mischief-w-sharifa-maria" target="_blank" rel="noreferrer">Music &amp; Mischief w/ Sharifa Maria</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/mymy-3rd-thursday-5-7pm" target="_blank" rel="noreferrer">MYMY</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/needs-more-nuance-2nd-thursday" target="_blank" rel="noreferrer">Needs More Nuance</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/neighbourhood-cotch-w-eddyb" target="_blank" rel="noreferrer">Neighbourhood Cotch w/ eddyB</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/netil-sessions-w-slauka-4th" target="_blank" rel="noreferrer">Netil Sessions w/ Slauka</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/nice-time-w-jack-mac-1st" target="_blank" rel="noreferrer">Nice Time w/ sxxtrxx</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/niche-w-ikaevae-pii-3rd-monday" target="_blank" rel="noreferrer">NICHE w/ Ikävä Pii</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/nick-stephens-1st-thursday-5" target="_blank" rel="noreferrer">Nick Stephens / The Gun</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/night-bus-w-raphi-quarterly-on" target="_blank" rel="noreferrer">Night Bus w/ Raphi</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/nou-2nd-wednesday-9-11pm" target="_blank" rel="noreferrer">Nou</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/one-thing-w-precious-4th" target="_blank" rel="noreferrer">One Thing w/ Precious</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/ondo-onda-4th-saturday-1-3pm" target="_blank" rel="noreferrer">Ondo Onda</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/orientate-w-john-xie-4th" target="_blank" rel="noreferrer">Orientate w/ John Xie</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/os-community-service-4th" target="_blank" rel="noreferrer">OS Community Service</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/peace-of-mind-3rd-sunday-6-8pm" target="_blank" rel="noreferrer">Peace of Mind</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/persistent-stickiness-w-w-h-y" target="_blank" rel="noreferrer">Persistent Stickiness w/ W.H.Y.</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/planet-panama-2nd-thursday" target="_blank" rel="noreferrer">Planet Panama</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/plantasia-2nd-saturday-11am" target="_blank" rel="noreferrer">Plantasia</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/plasma-w-tsuniman-4th-tuesday" target="_blank" rel="noreferrer">PLASMA w/ TSUNIMAN</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/platforms-2nd-thursday-7-9pm" target="_blank" rel="noreferrer">Platforms</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/pollenne-w-le-bandido-4th" target="_blank" rel="noreferrer">Pollenne w/ Le Bandido</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/poppy-richler-4th-sunday-12" target="_blank" rel="noreferrer">Poppy Richler</a></li>
+                            <li><a href="#" target="_blank" rel="noreferrer">Porcelain w/ Maiden</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/princes-republic-4th-march" target="_blank" rel="noreferrer">princess republic</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/psybuzz-w-dvd-c-3rd-sunday" target="_blank" rel="noreferrer">Psybuzz w/ DVD-C</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/rabiah-3rd-tuesday-5-7pm-1" target="_blank" rel="noreferrer">Rabiah</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/bacana-radio-1st-thursday-1" target="_blank" rel="noreferrer">Radio Bacana w/ Pedro Zuim</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/ramjac-corporation-3rd" target="_blank" rel="noreferrer">Ramjac Corporation</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/reflex-interference-w-ossou" target="_blank" rel="noreferrer">Reflex Interference w/ Ossou Erratic</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/research-document-w-coco" target="_blank" rel="noreferrer">Research &amp; Document w/ Coco Brigitte</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/saharan-tundra-w-deeby-2nd" target="_blank" rel="noreferrer">Saharan Tundra w/ Deeby</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/secret-ingredient-w-sodha-2nd" target="_blank" rel="noreferrer">Secret Ingredient w/ Sodha</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/shadow-essence-w-fhionbarra" target="_blank" rel="noreferrer">Shadow Essence w/ Fhionbarra</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/sh3l-3rd-wednesday-7-9pm" target="_blank" rel="noreferrer">SH3L</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/silver-sounds-w-izzy-2nd" target="_blank" rel="noreferrer">Silver Sounds w/ izzy.</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/solar-rocks-2nd-wednesday-7" target="_blank" rel="noreferrer">Solar Rocks w/ aurhya11 &amp; sunni</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/sounds-floating-around-w" target="_blank" rel="noreferrer">søund fløating arøund w/ Flaaviø</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/smiling-stranger-w-le-bandido" target="_blank" rel="noreferrer">Smiling Stranger</a></li>
+                            <li><a href="#" target="_blank" rel="noreferrer">Snackmachine</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/snorkelling-w-gabriel-hops-bi" target="_blank" rel="noreferrer">Snorkelling w/ Gabriel Hops</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/spiralling-naturally-w-basic" target="_blank" rel="noreferrer">spiralling, naturally w/ basic chanel</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/spectrum-w-maze-1st-tuesday-7" target="_blank" rel="noreferrer">Spectrum w/ Angel Maze</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/stranger-than-paradise-2nd" target="_blank" rel="noreferrer">Stranger Than Paradise</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/streamfm-w-life-is-beautiful" target="_blank" rel="noreferrer">streamFM w/ life is beautiful records</a></li>
+                            <li><a href="#" target="_blank" rel="noreferrer">StrettoBlaster w/ Ffiume</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/swn-w-meg-2nd-monday-11am-1pm" target="_blank" rel="noreferrer">SWN w/ Meg</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/tempaural-w-tania-atyabi-2nd" target="_blank" rel="noreferrer">Tempaural w/ Tania Atyabi</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/the-augenblick-press-show-4th" target="_blank" rel="noreferrer">The Augenblick Press Show</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/the-breakfast-brapp-w-shimmy" target="_blank" rel="noreferrer">The Breakfast Brapp w/ Shimmy &amp; Friends</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/fresh-beats-by-lsem-2nd-monday" target="_blank" rel="noreferrer">The LSEM Show</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/the-nvwls-show-1st-friday-7" target="_blank" rel="noreferrer">The NVWLS Show</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/the-people-dancefloors-w-alex" target="_blank" rel="noreferrer">The People and Dancefloors Radio Show w/ Alex Aldridge &amp; Giulia Zampini</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/the-remi-martin-show-4th" target="_blank" rel="noreferrer">The Remi Martin Show</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/through-the-oxide-w-sarjan-2nd" target="_blank" rel="noreferrer">Through The Oxide w/ Sarjan</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/tracing-faces-w-makeda-4th" target="_blank" rel="noreferrer">Tracing Faces w/ Makeda</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/harry-4th-wednesday-5-7pm" target="_blank" rel="noreferrer">Two Moons w/ Harry</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/unbound-riddims-w-dj-winggold" target="_blank" rel="noreferrer">Unbound Riddims w/ DJ Winggold</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/united-freedom-collective-3rd" target="_blank" rel="noreferrer">United Freedom Collective</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/universal-library-w-eno-inwang" target="_blank" rel="noreferrer">Universal Library w/ Eno Inwang</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/vinyl-delivery-service-3rd" target="_blank" rel="noreferrer">Vinyl Delivery Service</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/vinyl-hunter-show-2nd" target="_blank" rel="noreferrer">Vinyl Hunter Show</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/warmupyaweekend-w-sassy-wylie" target="_blank" rel="noreferrer">WarmUpYaWeekend w/ Sassy Wylie</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/way-in-living-3rd-wednesday-1" target="_blank" rel="noreferrer">Way in Living</a></li>
+                            <li><a href="https://soundcloud.com/netil-radio/sets/zee-hammer-4th-sunday-10pm" target="_blank" rel="noreferrer">Zee Hammer</a></li>
+                        </ul>
+                    </div>
+                </section>
+            </main>
+            <footer class="footer">
+                <div class="footer-inner narrow-width">
+                    <div class="text">
+                        <p>Community broadcasting<br/>Hackney, London</p>
+                        <p>London&#x27;s community voice broadcasting live from a converted shipping container atop of Netil Market.</p>
+                        <p>Site designed and built by
+                            <!-- --><a href="https://goodpraxis.coop" target="_blank" rel="noopener noreferrer">Good Praxis</a>.</p>
+                        <ul class="social-media">
+                            <li><a href="https://twitter.com/netilradio/" target="_blank" rel="noopener noreferrer" title="Netil Radio on Twitter"><img src="/images/twitter.svg" alt="Twitter" loading="lazy"/></a></li>
+                            <li><a href="https://www.facebook.com/netilradio/" target="_blank" rel="noopener noreferrer" title="Netil Radio on Facebook"><img src="/images/facebook.svg" alt="Facebook" loading="lazy"/></a></li>
+                            <li><a href="https://www.instagram.com/netilradio/" target="_blank" rel="noopener noreferrer" title="Netil Radio on Instagram"><img src="/images/instagram.svg" alt="Instagram" loading="lazy"/></a></li>
+                            <li><a href="https://www.mixcloud.com/NetilRadio/" target="_blank noreferrer" rel="noopener" title="Netil Radio on Mixcloud"><img src="/images/mixcloud.svg" alt="Mixcloud" loading="lazy"/></a></li>
+                        </ul>
+                    </div>
+                    <ul class="footer-logos">
+                        <li><a href="https://eatworkart.com/" target="_blank" rel="noreferrer noopener"><img src="/images/logo-ewa.svg" title="Eat Work Art" alt="Eat Work Art" loading="lazy"/></a></li>
+                        <li><a href="https://goodpraxis.coop" target="_blank" rel="noreferrer noopener"><img src="/images/logo-gp-filled.svg" title="Made by Good Praxis" alt="Good Praxis logo" loading="lazy"/></a></li>
+                    </ul>
+                </div>
+            </footer>
+        </div>
+        <div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div>
+    </div>
+    <script id="gatsby-script-loader">
+        /*<![CDATA[*/
+        window.pagePath = "/";
+        window.___webpackCompilationHash = "7dff3eba143c697c1a09"; /*]]>*/
+    </script>
+    <script id="gatsby-chunk-mapping">
+        /*<![CDATA[*/
+        window.___chunkMapping = {
+            "polyfill": ["/polyfill-e4cce112a4c12cec3cc6.js"],
+            "app": ["/app-5b85b32007a0ac2e51e4.js"],
+            "component---src-pages-index-jsx": ["/component---src-pages-index-jsx-c2385e36cdedbb0cc4b3.js"]
+        }; /*]]>*/
+    </script>
+    <script src="/polyfill-e4cce112a4c12cec3cc6.js" nomodule=""></script>
+    <script src="/component---src-pages-index-jsx-c2385e36cdedbb0cc4b3.js" async=""></script>
+    <script src="/app-5b85b32007a0ac2e51e4.js" async=""></script>
+    <script src="/framework-2a97f677c582c25acc7e.js" async=""></script>
+    <script src="/webpack-runtime-c816e5f1a78c4a4343a5.js" async=""></script>
+</body>
+
+</html>
